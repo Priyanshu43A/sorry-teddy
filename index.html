@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teddy's Mood Booster</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
+      background-color: #fff5f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      overflow-x: hidden;
+      transition: background-color 1s ease;
+    }
+    
+    .container {
+      text-align: center;
+      width: 90%;
+      max-width: 500px;
+      padding: 20px;
+      position: relative;
+    }
+    
+    h1 {
+      color: #ff6b6b;
+      margin-bottom: 20px;
+      font-size: 28px;
+    }
+    
+    .teddy-container {
+      position: relative;
+      height: 300px;
+      margin: 20px 0;
+    }
+    
+    .teddy {
+      width: 200px;
+      height: 240px;
+      position: relative;
+      margin: 0 auto;
+      transition: transform 0.3s ease;
+    }
+    
+    .teddy-body {
+      width: 140px;
+      height: 160px;
+      background-color: #c58c56;
+      border-radius: 70px;
+      position: absolute;
+      top: 80px;
+      left: 30px;
+    }
+    
+    .teddy-head {
+      width: 120px;
+      height: 110px;
+      background-color: #c58c56;
+      border-radius: 60px;
+      position: absolute;
+      top: 0;
+      left: 40px;
+      z-index: 2;
+    }
+    
+    .teddy-ear {
+      width: 40px;
+      height: 40px;
+      background-color: #b27b45;
+      border-radius: 50%;
+      position: absolute;
+      top: 5px;
+      z-index: 1;
+    }
+    
+    .teddy-ear.left {
+      left: 30px;
+    }
+    
+    .teddy-ear.right {
+      right: 30px;
+    }
+    
+    .teddy-muzzle {
+      width: 70px;
+      height: 50px;
+      background-color: #e0b37e;
+      border-radius: 35px;
+      position: absolute;
+      top: 60px;
+      left: 25px;
+      z-index: 3;
+    }
+    
+    .teddy-eye {
+      width: 12px;
+      height: 12px;
+      background-color: #333;
+      border-radius: 50%;
+      position: absolute;
+      top: 45px;
+      z-index: 4;
+      transition: all 0.3s ease;
+    }
+    
+    .teddy-eye.left {
+      left: 35px;
+    }
+    
+    .teddy-eye.right {
+      right: 35px;
+    }
+    
+    .teddy-eye-brow {
+      width: 20px;
+      height: 4px;
+      background-color: #995c33;
+      position: absolute;
+      top: 35px;
+      z-index: 4;
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+    
+    .teddy-eye-brow.left {
+      left: 30px;
+      transform: rotate(15deg);
+    }
+    
+    .teddy-eye-brow.right {
+      right: 30px;
+      transform: rotate(-15deg);
+    }
+    
+    .teddy-nose {
+      width: 20px;
+      height: 12px;
+      background-color: #333;
+      border-radius: 10px;
+      position: absolute;
+      top: 60px;
+      left: 45px;
+      z-index: 4;
+    }
+    
+    .teddy-mouth {
+      width: 30px;
+      height: 10px;
+      border-bottom: 3px solid #333;
+      border-radius: 50%;
+      position: absolute;
+      top: 75px;
+      left: 40px;
+      z-index: 4;
+      transition: all 0.5s ease;
+    }
+    
+    .teddy-blush {
+      width: 20px;
+      height: 10px;
+      background-color: #ff9999;
+      border-radius: 50%;
+      position: absolute;
+      top: 65px;
+      opacity: 0;
+      z-index: 3;
+      transition: opacity 0.5s ease;
+    }
+    
+    .teddy-blush.left {
+      left: 15px;
+    }
+    
+    .teddy-blush.right {
+      right: 15px;
+    }
+    
+    .teddy-arm {
+      width: 35px;
+      height: 80px;
+      background-color: #b27b45;
+      border-radius: 20px;
+      position: absolute;
+      top: 100px;
+      z-index: 1;
+      transform-origin: top center;
+      transition: transform 0.5s ease;
+    }
+    
+    .teddy-arm.left {
+      left: 10px;
+      transform: rotate(20deg);
+    }
+    
+    .teddy-arm.right {
+      right: 10px;
+      transform: rotate(-20deg);
+    }
+    
+    .teddy-leg {
+      width: 40px;
+      height: 50px;
+      background-color: #b27b45;
+      border-radius: 20px;
+      position: absolute;
+      top: 190px;
+      z-index: 1;
+    }
+    
+    .teddy-leg.left {
+      left: 50px;
+    }
+    
+    .teddy-leg.right {
+      right: 50px;
+    }
+    
+    .angry-button {
+      background-color: #ff6b6b;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 18px;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 10;
+    }
+    
+    .angry-button:hover {
+      background-color: #ff5252;
+      transform: scale(1.05);
+    }
+    
+    .angry-button:active {
+      transform: scale(0.95);
+    }
+    
+    .message {
+      font-size: 18px;
+      color: #ff6b6b;
+      margin: 20px 0;
+      min-height: 60px;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+    
+    .flower {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      z-index: 1;
+      opacity: 0;
+      transform-origin: center;
+    }
+    
+    .flower-center {
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      background-color: #ffcc00;
+      border-radius: 50%;
+      top: 12.5px;
+      left: 12.5px;
+      z-index: 2;
+    }
+    
+    .flower-petal {
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      background-color: #ff97c1;
+      border-radius: 50% 50% 0 50%;
+      z-index: 1;
+      transform-origin: bottom right;
+    }
+    
+    .flower-petal:nth-child(1) {
+      transform: rotate(0deg);
+      top: 4px;
+      left: 12.5px;
+    }
+    
+    .flower-petal:nth-child(2) {
+      transform: rotate(72deg);
+      top: 10px;
+      right: 5px;
+    }
+    
+    .flower-petal:nth-child(3) {
+      transform: rotate(144deg);
+      bottom: 5px;
+      right: 10px;
+    }
+    
+    .flower-petal:nth-child(4) {
+      transform: rotate(216deg);
+      bottom: 5px;
+      left: 10px;
+    }
+    
+    .flower-petal:nth-child(5) {
+      transform: rotate(288deg);
+      top: 10px;
+      left: 5px;
+    }
+    
+    .heart {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      background-color: #ff6b6b;
+      transform: rotate(45deg);
+      opacity: 0;
+      z-index: 10;
+    }
+    
+    .heart:before, .heart:after {
+      content: '';
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      background-color: #ff6b6b;
+      border-radius: 50%;
+    }
+    
+    .heart:before {
+      top: -15px;
+      left: 0;
+    }
+    
+    .heart:after {
+      top: 0;
+      left: -15px;
+    }
+    
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      opacity: 0;
+      z-index: 10;
+    }
+    
+    .rainbow {
+      position: absolute;
+      width: 300px;
+      height: 150px;
+      z-index: 0;
+      opacity: 0;
+      transition: opacity 2s ease;
+    }
+    
+    .rainbow-arch {
+      position: absolute;
+      height: 20px;
+      width: 100%;
+      border-radius: 10px;
+    }
+    
+    .rainbow-arch:nth-child(1) {
+      top: 0;
+      background-color: #ff0000;
+    }
+    
+    .rainbow-arch:nth-child(2) {
+      top: 20px;
+      background-color: #ff9900;
+    }
+    
+    .rainbow-arch:nth-child(3) {
+      top: 40px;
+      background-color: #ffff00;
+    }
+    
+    .rainbow-arch:nth-child(4) {
+      top: 60px;
+      background-color: #33cc33;
+    }
+    
+    .rainbow-arch:nth-child(5) {
+      top: 80px;
+      background-color: #3399ff;
+    }
+    
+    .rainbow-arch:nth-child(6) {
+      top: 100px;
+      background-color: #9966ff;
+    }
+    
+    .hug-animation {
+      animation: hug 1s ease;
+    }
+    
+    .jump-animation {
+      animation: jump 0.5s ease;
+    }
+    
+    .dance-animation {
+      animation: dance 1s infinite ease-in-out;
+    }
+    
+    @keyframes hug {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+    
+    @keyframes jump {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-30px); }
+      100% { transform: translateY(0); }
+    }
+    
+    @keyframes dance {
+      0% { transform: rotate(-5deg); }
+      50% { transform: rotate(5deg); }
+      100% { transform: rotate(-5deg); }
+    }
+    
+    .smile {
+      border-bottom: 4px solid #333;
+      border-radius: 50%;
+      height: 15px;
+    }
+    
+    .wink {
+      height: 2px;
+      width: 8px;
+      border-radius: 0;
+    }
+    
+    .love-message {
+      position: absolute;
+      font-size: 16px;
+      color: #ff6b6b;
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 5px 10px;
+      border-radius: 15px;
+      opacity: 0;
+      z-index: 5;
+      font-weight: bold;
+    }
+    
+    .audio-controls {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+      gap: 10px;
+    }
+    
+    .audio-button {
+      background-color: #ff97c1;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      font-size: 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+    
+    .audio-button:hover {
+      background-color: #ff7cad;
+    }
+    
+    .gift-box {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background-color: #ff97c1;
+      z-index: 5;
+      bottom: 20px;
+      right: 20px;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+    
+    .gift-box:before {
+      content: '';
+      position: absolute;
+      width: 50px;
+      height: 10px;
+      background-color: #ff7cad;
+      top: -5px;
+      left: 0;
+    }
+    
+    .gift-box:after {
+      content: '';
+      position: absolute;
+      width: 10px;
+      height: 60px;
+      background-color: #ff7cad;
+      top: -5px;
+      left: 20px;
+    }
+    
+    .popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    
+    .popup-content {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      max-width: 80%;
+    }
+    
+    .popup.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    
+    .close-popup {
+      margin-top: 10px;
+      background-color: #ff6b6b;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 600px) {
+      .container {
+        width: 95%;
+        padding: 10px;
+      }
+      
+      h1 {
+        font-size: 24px;
+      }
+      
+      .teddy {
+        transform: scale(0.9);
+      }
+      
+      .angry-button {
+        padding: 12px 25px;
+        font-size: 16px;
+      }
+      
+      .message {
+        font-size: 16px;
+      }
+      
+      .rainbow {
+        width: 250px;
+        height: 125px;
+      }
+    }
+    
+    @media (max-width: 400px) {
+      h1 {
+        font-size: 20px;
+      }
+      
+      .teddy {
+        transform: scale(0.8);
+      }
+      
+      .angry-button {
+        padding: 10px 20px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Teddy's Flower-Filled Mood Booster</h1>
+    
+    <div class="teddy-container">
+      <div class="rainbow">
+        <div class="rainbow-arch"></div>
+        <div class="rainbow-arch"></div>
+        <div class="rainbow-arch"></div>
+        <div class="rainbow-arch"></div>
+        <div class="rainbow-arch"></div>
+        <div class="rainbow-arch"></div>
+      </div>
+      
+      <div class="teddy">
+        <div class="teddy-ear left"></div>
+        <div class="teddy-ear right"></div>
+        <div class="teddy-head">
+          <div class="teddy-eye left"></div>
+          <div class="teddy-eye right"></div>
+          <div class="teddy-eye-brow left"></div>
+          <div class="teddy-eye-brow right"></div>
+          <div class="teddy-muzzle">
+            <div class="teddy-nose"></div>
+            <div class="teddy-mouth"></div>
+            <div class="teddy-blush left"></div>
+            <div class="teddy-blush right"></div>
+          </div>
+        </div>
+        <div class="teddy-body"></div>
+        <div class="teddy-arm left"></div>
+        <div class="teddy-arm right"></div>
+        <div class="teddy-leg left"></div>
+        <div class="teddy-leg right"></div>
+      </div>
+    </div>
+    
+    <button class="angry-button">I'm Angry!</button>
+    
+    <div class="message"></div>
+    
+    <div class="audio-controls">
+      <button class="audio-button" id="cute-voice-1">Cute Voice 1</button>
+      <button class="audio-button" id="cute-voice-2">Cute Voice 2</button>
+      <button class="audio-button" id="cute-voice-3">Cute Voice 3</button>
+    </div>
+    
+    <div class="gift-box"></div>
+  </div>
+  
+  <div class="popup">
+    <div class="popup-content">
+      <h2>A Special Gift For You!</h2>
+      <p>Remember that you are amazing, beautiful, and worthy of all the love in the world! Here's a bouquet of virtual flowers just for you. ❤️</p>
+      <div id="flower-bouquet" style="margin: 20px 0; height: 150px; position: relative;"></div>
+      <button class="close-popup">Thank You!</button>
+    </div>
+  </div>
+
+  <script>
+    const angryButton = document.querySelector('.angry-button');
+    const teddy = document.querySelector('.teddy');
+    const teddyMouth = document.querySelector('.teddy-mouth');
+    const teddyLeftArm = document.querySelector('.teddy-arm.left');
+    const teddyRightArm = document.querySelector('.teddy-arm.right');
+    const teddyLeftEye = document.querySelector('.teddy-eye.left');
+    const teddyRightEye = document.querySelector('.teddy-eye.right');
+    const teddyLeftEyeBrow = document.querySelector('.teddy-eye-brow.left');
+    const teddyRightEyeBrow = document.querySelector('.teddy-eye-brow.right');
+    const teddyLeftBlush = document.querySelector('.teddy-blush.left');
+    const teddyRightBlush = document.querySelector('.teddy-blush.right');
+    const message = document.querySelector('.message');
+    const body = document.querySelector('body');
+    const rainbow = document.querySelector('.rainbow');
+    const giftBox = document.querySelector('.gift-box');
+    const popup = document.querySelector('.popup');
+    const closePopup = document.querySelector('.close-popup');
+    const flowerBouquet = document.getElementById('flower-bouquet');
+    
+    // Audio elements
+    const audioElements = [
+      { id: 'cute-voice-1', message: "Hey there! I'm here to brighten your day!" },
+      { id: 'cute-voice-2', message: "You're absolutely amazing, don't forget that!" },
+      { id: 'cute-voice-3', message: "Sending you lots of love and happiness!" }
+    ];
+    
+    // Array of mood-boosting messages
+    const messages = [
+      "You know what? Your smile lights up the whole room! 💕",
+      "Hey beautiful! Let me shower you with flowers and love! 🌸",
+      "Even when you're angry, you're still absolutely amazing! 💫",
+      "Take a deep breath... I'm here to make everything better! 🌈",
+      "You deserve all the happiness and flowers in the world! 🌷",
+      "Your strength is inspiring, even on tough days! 💪",
+      "I'm sending you a big teddy bear hug right now! 🧸",
+      "Let's turn that frown upside down with some flower power! 🌺",
+      "You're a ray of sunshine, even on cloudy days! ☀️",
+      "Your beauty shines from within, especially when you smile! ✨",
+      "I think you're absolutely wonderful, angry or not! 💖",
+      "Nobody's perfect, but you're pretty close to it! 😊",
+      "You make the world a better place just by being in it! 🌎",
+      "Whatever happened, remember you're still amazing! 💫",
+      "Let's dance away the anger together! 💃"
+    ];
+    
+    // Colors for the background transitions
+    const colors = [
+      '#fff5f5', '#f0f8ff', '#f5fff0', '#fff0f8',
+      '#f0fff8', '#f8f0ff', '#fffaf0', '#f0fffa'
+    ];
+    
+    // Love messages to display around teddy
+    const loveMessages = [
+      "♥ You're Beautiful! ♥",
+      "Gorgeous Girl!",
+      "Queen Energy!",
+      "Breathe & Smile...",
+      "You're Amazing!",
+      "Absolutely Perfect!",
+      "Sending Love!",
+      "You're Magical!",
+      "Stunning Angel!",
+      "Pure Perfection!"
+    ];
+    
+    // Flower colors
+    const flowerColors = [
+      '#ff97c1', '#ff7c7c', '#97c1ff', '#c197ff', 
+      '#ffcc97', '#97ffcc', '#fff797', '#ff97e9'
+    ];
+    
+    let clickCount = 0;
+    let colorIndex = 0;
+    let emotionState = 'neutral';
+    
+    // Create synthetic speech function
+    function speak(text) {
+      if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = 1.1;
+        utterance.pitch = 1.5;
+        speechSynthesis.speak(utterance);
+      }
+    }
+    
+    // Initialize audio buttons
+    audioElements.forEach(audio => {
+      const button = document.getElementById(audio.id);
+      button.addEventListener('click', () => {
+        message.textContent = audio.message;
+        message.style.opacity = '1';
+        
+        if ('speechSynthesis' in window) {
+          const utterance = new SpeechSynthesisUtterance(audio.message);
+          utterance.rate = 1.1;
+          utterance.pitch = 1.5;
+          speechSynthesis.speak(utterance);
+        }
+        
+        setTimeout(() => {
+          message.style.opacity = '0';
+        }, 5000);
+      });
+    });
+    
+    function createFlower() {
+      const flower = document.createElement('div');
+      flower.classList.add('flower');
+      
+      // Random position
+      const posX = Math.random() * window.innerWidth;
+      const posY = Math.random() * window.innerHeight;
+      
+      flower.style.left = `${posX}px`;
+      flower.style.top = `${posY}px`;
+      
+      // Create flower parts
+      const flowerCenter = document.createElement('div');
+      flowerCenter.classList.add('flower-center');
+      
+      // Random color for petals
+      const randomColor = flowerColors[Math.floor(Math.random() * flowerColors.length)];
+      
+      // Create 5 petals
+      for (let i = 0; i < 5; i++) {
+        const petal = document.createElement('div');
+        petal.classList.add('flower-petal');
+        petal.style.backgroundColor = randomColor;
+        flower.appendChild(petal);
+      }
+      
+      flower.appendChild(flowerCenter);
+      document.body.appendChild(flower);
+      
+      // Animate the flower
+      setTimeout(() => {
+        flower.style.opacity = '0.9';
+        flower.style.transform = `translate(${Math.random() * 100 - 50}px, ${-Math.random() * 200 - 100}px) rotate(${Math.random() * 360}deg)`;
+        flower.style.transition = 'all 3s ease';
+      }, 10);
+      
+      // Remove the flower after animation
+      setTimeout(() => {
+        document.body.removeChild(flower);
+      }, 3000);
+    }
+    
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      
+      // Random position
+      const posX = Math.random() * window.innerWidth;
+      const posY = Math.random() * window.innerHeight;
+      
+      heart.style.left = `${posX}px`;
+      heart.style.top = `${posY}px`;
+      
+      document.body.appendChild(heart);
+      
+      // Animate the heart
+      setTimeout(() => {
+        heart.style.opacity = '0.8';
+        heart.style.transform = `rotate(45deg) translate(${Math.random() * 100 - 50}px, ${-Math.random() * 200 - 100}px)`;
+        heart.style.transition = 'all 2s ease';
+      }, 10);
+      
+      // Remove the heart after animation
+      setTimeout(() => {
+        document.body.removeChild(heart);
+      }, 2000);
+    }
+    
+    function createConfetti() {
+      const confetti = document.createElement('div');
+      confetti.classList.add('confetti');
+      
+      // Random position
+      const posX = Math.random() * window.innerWidth;
+      const posY = Math.random() * 200;
+      
+      // Random color
+      const colors = ['#ff6b6b', '#4ecdc4', '#ffe66d', '#ff8cc3', '#67d5b5'];
+      const randomColor = colors[Math.floor(Math.random() * colors.length)];
+      
+      confetti.style.left = `${posX}px`;
+      confetti.style.top = `${posY}px`;
+      confetti.style.backgroundColor = randomColor;
+      
+      document.body.appendChild(confetti);
+      
+      // Animate the confetti
+      setTimeout(() => {
+        confetti.style.opacity = '1';
+        confetti.style.transform = `translate(${Math.random() * 100 - 50}px, ${Math.random() * 500 + 200}px) rotate(${Math.random() * 360}deg)`;
+        confetti.style.transition = 'all 2s ease';
+      }, 10);
+      
+      // Remove the confetti after animation
+      setTimeout(() => {
+        document.body.removeChild(confetti);
+      }, 2000);
+    }
+    
+    function createLoveMessage() {
+      const loveMessage = document.createElement('div');
+      loveMessage.classList.add('love-message');
+      
+      // Random love message
+      const randomMessage = loveMessages[Math.floor(Math.random() * loveMessages.length)];
+      loveMessage.textContent = randomMessage;
+      
+      // Random position around teddy
+      const teddyRect = teddy.getBoundingClientRect();
+      const angle = Math.random() * Math.PI * 2;
+      const distance = 150 + Math.random() * 50;
+      const posX = teddyRect.left + teddyRect.width/2 + Math.cos(angle) * distance;
+      const posY = teddyRect.top + teddyRect.height/2 + Math.sin(angle) * distance;
+      
+      loveMessage.style.left = `${posX}px`;
+      loveMessage.style.top = `${posY}px`;
+      
+      document.body.appendChild(loveMessage);
+      
+      // Animate the message
+      setTimeout(() => {
+        loveMessage.style.opacity = '1';
+        loveMessage.style.transform = `translate(${Math.cos(angle) * 20}px, ${Math.sin(angle) * 20}px)`;
+        loveMessage.style.transition = 'all 0.5s ease';
+      }, 10);
+      
+      // Remove the message after animation
+      setTimeout(() => {
+        loveMessage.style.opacity = '0';
+        loveMessage.style.transition = 'opacity 0.5s ease';
+        
+        setTimeout(() => {
+          document.body.removeChild(loveMessage);
+        }, 500);
+      }, 2500);
+    }
+    
+    function createFlowerBouquet() {
+      // Clear previous bouquet
+      flowerBouquet.innerHTML = '';
+      
+      // Create a bouquet of flowers
+      for (let i = 0; i < 15; i++) {
+        const flower = document.createElement('div');
+        flower.classList.add('flower');
+        flower.style.position = 'absolute';
+        flower.style.opacity = '1';
+        
+        // Position in a bouquet shape
+        const angle = (i / 15) * Math.PI;
+        const radius = 50 + Math.random() * 20;
+        const posX = 75 + Math.cos(angle) * radius;
+        const posY = 75 + Math.sin(angle) * radius * 0.6;
+        
+        flower.style.left = `${posX}px`;
+        flower.style.top = `${posY}px`;
+        flower.style.transform = `rotate(${Math.random() * 30 - 15}deg)`;
+        
+        // Create flower parts
+        const flowerCenter = document.createElement('div');
+        flowerCenter.classList.add('flower-center');
+        
+        // Random color for petals
+        const randomColor = flowerColors[Math.floor(Math.random() * flowerColors.length)];
+        
+        // Create 5 petals
+        for (let j = 0; j < 5; j++) {
+          const petal = document.createElement('div');
+          petal.classList.add('flower-petal');
+          petal.style.backgroundColor = randomColor;
+          flower.appendChild(petal);
+        }
+        
+        flower.appendChild(flowerCenter);
+        flowerBouquet.appendChild(flower);
+      }
+    }
+    
+    // Event listener for the angry button
+    angryButton.addEventListener('click', () => {
+      clickCount++;
+      
+      // Choose a random message
+      const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+      message.textContent = randomMessage;
+      message.style.opacity = '1';
+      
+      // Change background color
+      colorIndex = (colorIndex + 1) % colors.length;
+      body.style.backgroundColor = colors[colorIndex];
+      
+      // Create multiple flowers and hearts
+      for (let i = 0; i < 5; i++) {
+        setTimeout(() => {
+          createFlower();
+        }, i * 200);
+        
+        setTimeout(() => {
+          createHeart();
+        }, i * 300);
+      }
+      
+      // Show a love message
+      createLoveMessage();
+       
+      // Reset emotions and animations
+      resetEmotions();
+      
+      // Random animation for teddy
+      const randomAnim = Math.random();
+      if (randomAnim < 0.33) {
+        teddy.classList.add('hug-animation');
+        setTimeout(() => {
+          teddy.classList.remove('hug-animation');
+        }, 1000);
+        emotionState = 'happy';
+      } else if (randomAnim < 0.66) {
+        teddy.classList.add('jump-animation');
+        setTimeout(() => {
+          teddy.classList.remove('jump-animation');
+        }, 500);
+        emotionState = 'excited';
+      } else {
+        teddy.classList.add('dance-animation');
+        setTimeout(() => {
+          teddy.classList.remove('dance-animation');
+        }, 2000);
+        emotionState = 'dancing';
+      }
+      
+      // Update teddy emotions based on state
+      updateTeddyEmotions();
+      
+      // Show rainbow after several clicks
+      if (clickCount >= 3) {
+        rainbow.style.opacity = '0.7';
+        
+        // Create confetti
+        for (let i = 0; i < 20; i++) {
+          setTimeout(() => {
+            createConfetti();
+          }, i * 100);
+        }
+        
+        // Show gift box
+        giftBox.style.opacity = '1';
+      }
+      
+      // Hide message after some time
+      setTimeout(() => {
+        message.style.opacity = '0';
+      }, 5000);
+    });
+    
+    function resetEmotions() {
+      // Reset all emotion-related styles
+      teddyMouth.className = 'teddy-mouth';
+      teddyLeftEye.style.height = '12px';
+      teddyRightEye.style.height = '12px';
+      teddyLeftEyeBrow.style.opacity = '0';
+      teddyRightEyeBrow.style.opacity = '0';
+      teddyLeftBlush.style.opacity = '0';
+      teddyRightBlush.style.opacity = '0';
+      teddyLeftArm.style.transform = 'rotate(20deg)';
+      teddyRightArm.style.transform = 'rotate(-20deg)';
+    }
+    
+    function updateTeddyEmotions() {
+      switch (emotionState) {
+        case 'happy':
+          teddyMouth.classList.add('smile');
+          teddyLeftBlush.style.opacity = '0.7';
+          teddyRightBlush.style.opacity = '0.7';
+          break;
+          
+        case 'excited':
+          teddyMouth.classList.add('smile');
+          teddyLeftEye.style.height = '2px';
+          teddyLeftEye.style.width = '8px';
+          teddyRightEye.style.height = '2px';
+          teddyRightEye.style.width = '8px';
+          break;
+          
+        case 'dancing':
+          teddyMouth.classList.add('smile');
+          // Randomly wink
+          if (Math.random() > 0.5) {
+            teddyRightEye.style.height = '2px';
+            teddyRightEye.style.width = '8px';
+          }
+          teddyLeftArm.style.transform = 'rotate(-40deg)';
+          teddyRightArm.style.transform = 'rotate(40deg)';
+          break;
+      }
+    }
+    
+    // Gift box event
+    giftBox.addEventListener('click', () => {
+      popup.classList.add('active');
+      createFlowerBouquet();
+    });
+    
+    // Close popup
+    closePopup.addEventListener('click', () => {
+      popup.classList.remove('active');
+    });
+    
+    // Initial setup
+    setTimeout(() => {
+      message.textContent = "Feeling angry or down? Click the button below and let me cheer you up!";
+      message.style.opacity = '1';
+      
+      setTimeout(() => {
+        message.style.opacity = '0';
+      }, 5000);
+    }, 1000);
+  </script>
+</body>
+</html>
